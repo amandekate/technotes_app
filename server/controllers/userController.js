@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const Note = require('../models/Note')
 const asyncHandler = require('express-async-handler')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 
 // @desc Get all users
 // @route GET /users
@@ -43,7 +43,7 @@ const createNewUser = asyncHandler(async (req, res) => {
     }
 
     // Hash password 
-    const hashedPwd = await bcrypt.hash(password, 10) // salt rounds
+    const hashedPwd = await bcryptjs.hash(password, 10) // salt rounds
 
     const userObject = { username, "password": hashedPwd, roles , active: isUserActive }
 
@@ -89,7 +89,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     if (password) {
         // Hash password 
-        user.password = await bcrypt.hash(password, 10) // salt rounds 
+        user.password = await bcryptjs.hash(password, 10) // salt rounds 
     }
 
     const updatedUser = await user.save()

@@ -1,5 +1,5 @@
 const User = require('../models/User')
-const bcrypt = require('bcrypt')
+const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
 
@@ -19,7 +19,7 @@ const login = asyncHandler(async (req, res) => {
         return res.status(401).json({ message: 'Unauthorized' })
     }
 
-    const match = await bcrypt.compare(password, foundUser.password)
+    const match = await bcryptjs.compare(password, foundUser.password)
 
     if (!match) return res.status(401).json({ message: 'Unauthorized' })
 
